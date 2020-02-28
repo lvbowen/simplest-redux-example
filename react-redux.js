@@ -10,8 +10,9 @@ class Counter extends Component {
     const { value, onIncreaseClick } = this.props
     return (
       <div>
+        <h2>react-redux</h2>
         <span>{value}</span>
-        <button onClick={onIncreaseClick}>Increase</button>
+        <button onClick={onIncreaseClick}>增加</button>
       </div>
     )
   }
@@ -22,15 +23,17 @@ Counter.propTypes = {
   onIncreaseClick: PropTypes.func.isRequired
 }
 
-// Action
-const increaseAction = { type: 'increase' }
+// InitState
+const initState = {
+  count: 0
+};
 
 // Reducer
-function counter(state = { count: 0 }, action) {
-  const count = state.count
+function counter(state = initState, action) {
   switch (action.type) {
     case 'increase':
-      return { count: count + 1 }
+      const newState = Object.assign({}, state, { count: state.count + 1 });
+      return newState;
     default:
       return state
   }
@@ -38,6 +41,9 @@ function counter(state = { count: 0 }, action) {
 
 // Store
 const store = createStore(counter)
+
+// Action
+const increaseAction = { type: 'increase' }
 
 // Map Redux state to component props
 function mapStateToProps(state) {
